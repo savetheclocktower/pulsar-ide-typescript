@@ -436,8 +436,52 @@
         }
       }
     },
-    "advanced": {
+    "hover": {
       "order": 6,
+      "title": "Hover Information",
+      "type": "object",
+      "collapsed": false,
+      "properties": {
+        "enable": {
+          "title": "Enable",
+          "order": 0,
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to act as a hover information provider via the `datatip` and `hover` services. Hover information offers useful context for tokens under the cursor or mouse pointer. (Takes effect after a window reload or a restart of Pulsar.)"
+        },
+        "priority": {
+          "order": 1,
+          "title": "Priority",
+          "default": 1,
+          "type": "number",
+          "description": "The priority of this hover information provider. Consumer packages use priority to decide which provider should “win” if several are available for a given task."
+        }
+      }
+    },
+    "signatureHelp": {
+      "order": 7,
+      "title": "Signature Help",
+      "type": "object",
+      "collapsed": false,
+      "properties": {
+        "enable": {
+          "title": "Enable",
+          "type": "boolean",
+          "default": true,
+          "order": 0,
+          "description": "Whether to act as a signature help provider via the `signature-help` and `signature` services. Signature help offers guidance about each parameter as you type the arguments of a function. (Takes effect after a window reload or a restart of Pulsar.)"
+        },
+        "priority": {
+          "order": 1,
+          "title": "Priority",
+          "default": 1,
+          "type": "number",
+          "description": "The priority of this signature help provider. Consumer packages use priority to decide which provider should “win” if several are available for a given task."
+        }
+      }
+    },
+    "advanced": {
+      "order": 9,
       "collapsed": true,
       "type": "object",
       "title": "Advanced",
