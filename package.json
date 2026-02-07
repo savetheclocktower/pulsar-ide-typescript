@@ -121,6 +121,164 @@
         }
       }
     },
+    "implicitProjectConfiguration": {
+      "order": 8,
+      "title": "Implicit Project Configuration",
+      "description": "Governs IDE package behavior on projects that **do not** have a `tsconfig.json` or `jsconfig.json` file. These settings are ignored if either file is present in the project.",
+      "type": "object",
+      "properties": {
+        "checkJs": {
+          "title": "Check JavaScript",
+          "description": "Enable/disable semantic checking of JavaScript files.",
+          "type": "boolean",
+          "default": false,
+          "order": 1
+        },
+        "experimentalDecorators": {
+          "title": "Enable Experimental Decorators",
+          "description": "Enable/disable `experimentalDecorators` in JavaScript files that are not part of a project.",
+          "type": "boolean",
+          "default": false,
+          "order": 2
+        },
+        "module": {
+          "title": "Module System",
+          "description": "Set the [module system](https://www.typescriptlang.org/tsconfig#module) for the program.",
+          "type": "string",
+          "default": "esnext",
+          "enum": [
+            {
+              "value": "none",
+              "description": "none"
+            },
+            {
+              "value": "commonjs",
+              "description": "commonjs"
+            },
+            {
+              "value": "amd",
+              "description": "amd"
+            },
+            {
+              "value": "umd",
+              "description": "umd"
+            },
+            {
+              "value": "system",
+              "description": "system"
+            },
+            {
+              "value": "es2015",
+              "description": "es6/es2015"
+            },
+            {
+              "value": "es2020",
+              "description": "es2020"
+            },
+            {
+              "value": "es2022",
+              "description": "es2022"
+            },
+            {
+              "value": "esnext",
+              "description": "esnext"
+            },
+            {
+              "value": "node16",
+              "description": "node16"
+            },
+            {
+              "value": "node18",
+              "description": "node18"
+            },
+            {
+              "value": "nodenext",
+              "description": "nodenext"
+            },
+            {
+              "value": "preserve",
+              "description": "preserve"
+            }
+          ],
+          "order": 3
+        },
+        "strictFunctionTypes": {
+          "title": "Strict Function Types",
+          "description": "Enable/disable [strict function types](https://www.typescriptlang.org/tsconfig#strictFunctionTypes) in JavaScript and TypeScript files that are not part of a project.",
+          "type": "boolean",
+          "default": true,
+          "order": 4
+        },
+        "strictNullChecks": {
+          "title": "Strict Null Checks",
+          "description": "Enable/disable [strict null checks](https://www.typescriptlang.org/tsconfig#strictNullChecks) in JavaScript and TypeScript files that are not part of a project.",
+          "type": "boolean",
+          "default": true,
+          "order": 5
+        },
+        "target": {
+          "title": "Target",
+          "description": "Set [target JavaScript language version](https://www.typescriptlang.org/tsconfig#target) for emitted JavaScript and include library declarations.",
+          "type": "string",
+          "default": "es2020",
+          "enum": [
+            {
+              "value": "es3",
+              "description": "es3"
+            },
+            {
+              "value": "es5",
+              "description": "es5"
+            },
+            {
+              "value": "es2015",
+              "description": "es6/es2015"
+            },
+            {
+              "value": "es2016",
+              "description": "es2016"
+            },
+            {
+              "value": "es2017",
+              "description": "es2017"
+            },
+            {
+              "value": "es2018",
+              "description": "es2018"
+            },
+            {
+              "value": "es2019",
+              "description": "es2019"
+            },
+            {
+              "value": "es2020",
+              "description": "es2020"
+            },
+            {
+              "value": "es2021",
+              "description": "es2021"
+            },
+            {
+              "value": "es2022",
+              "description": "es2022"
+            },
+            {
+              "value": "es2023",
+              "description": "es2023"
+            },
+            {
+              "value": "es2024",
+              "description": "es2024"
+            },
+            {
+              "value": "esnext",
+              "description": "esnext"
+            }
+          ],
+          "order": 6
+        }
+      }
+    },
     "autocomplete": {
       "order": 4,
       "type": "object",
