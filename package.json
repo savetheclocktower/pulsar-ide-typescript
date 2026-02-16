@@ -7,7 +7,7 @@
   "repository": "https://github.com/savetheclocktower/pulsar-ide-typescript",
   "license": "MIT",
   "engines": {
-    "atom": ">=1.0.0 <2.0.0"
+    "atom": ">=1.131.0 <2.0.0"
   },
   "activationCommands": {
     "atom-workspace": [
@@ -30,12 +30,19 @@
     "typescript-language-server": "^4.3.4"
   },
   "configSchema": {
+    "useBuiltinNode": {
+      "title": "Use Built-in Node",
+      "default": true,
+      "type": "boolean",
+      "description": "When enabled, will use Pulsar’s own version of Node to start the server process. Disable this and specify a custom path below if you want more control over the exact Node version used.",
+      "order": 0
+    },
     "nodeBin": {
       "title": "Path to Node",
       "default": "node",
       "type": "string",
-      "description": "Usually the default will detect the correct version of Node for your path. Specify this value if you encounter errors. Check the README for more information.",
-      "order": 0
+      "description": "Only used if “Use Built-in Node” is disabled. Usually the default will detect the correct version of Node for your path. Specify this value if you encounter errors. Check the README for more information.",
+      "order": 0.5
     },
     "includeJavaScript": {
       "order": 1,

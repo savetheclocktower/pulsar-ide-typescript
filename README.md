@@ -4,35 +4,25 @@ An IDE provider package for TypeScript and JavaScript.
 
 Uses its own copy of [typescript-language-server](https://www.npmjs.com/package/typescript-language-server); **you do not need to install your own**.
 
----
+## Node: use bundled version or bring your own
 
-## IMPORTANT: New setting for v0.1.0 and above
+On Pulsar v1.131.0 and greater, `pulsar-ide-typescript` is able to use Pulsar’s own embedded Node to run `typescript-language-server`. If you would prefer to bring your own Node, you can uncheck “Use Built-in Node” in the package settings and specify the path to your own version of Node.
 
-This package used to use Pulsar’s built-in version of Node to run [typescript-language-server](https://www.npmjs.com/package/typescript-language-server), but recent versions of the language server require Node 18 or above, and Pulsar is stuck on version 14 until it can upgrade its underlying Electron version.
+### Use bundled version
 
-The solution is to supply your own version of Node so that `typescript-language-server` can run using the more modern version your project is probably already using. This is more hygienic anyway, and it’s only slightly more of a hassle.
+This setting is enabled by default and will work for the vast majority of users.
 
-### How does it work?
+### Bring your own
 
-* If you don’t have Node installed on your system, or if your installed version is too old, you have [many options for installing the latest version of Node](https://nodejs.org/en/download/).
+This setting is for those who want precise control over the Node version used — for instance, if they want to ensure alignment with the Node version that their project users.
 
-* The “Path to Node” setting (or `pulsar-ide-typescript.nodeBin`) is what will run the built-in `typescript-language-server`. If you typically launch Pulsar from the command line, the default value of `node` will almost surely work. Since Pulsar inherits your shell environment, this will usually resolve to the version of Node that would run if you typed `node` from whatever directory you used to launch Pulsar from the command line.
+The “Path to Node” setting (or `pulsar-ide-typescript.nodeBin`) is what will run the built-in `typescript-language-server`. If you typically launch Pulsar from the command line, the default value of `node` will almost surely work. Since Pulsar inherits your shell environment, this will usually resolve to the version of Node that would run if you typed `node` from whatever directory you used to launch Pulsar from the command line.
 
-    This is likely to work even with tools like [asdf](https://asdf-vm.com/) and [volta](https://volta.sh/) that use “shims” to manage multiple versions of Node.
+This is likely to work even with tools like [asdf](https://asdf-vm.com/) and [volta](https://volta.sh/) that use “shims” to manage multiple versions of Node.
 
-    Even if you launch Pulsar another way, it’s pretty good at recreating your default shell environment, including your `PATH`. So it’s still worth trying the default value just to see if it works.
+Even if you launch Pulsar another way, it’s pretty good at recreating your default shell environment, including your `PATH`. So it’s still worth trying the default value just to see if it works.
 
-* If it doesn’t work, you’ll see an error notification explaining that the language server failed to launch. You can open the package settings and supply a full, absolute path to a Node binary of version 18 or greater; you’ll know you’ve entered it properly when the error notification is replaced with a success notification.
-
-* If you want to specify different Node paths for different projects, consider [project-config](https://web.pulsar-edit.dev/packages/project-config) or [atomic-management](https://web.pulsar-edit.dev/packages/atomic-management); either will allow you to set config values of `pulsar-ide-typescript.nodeBin` on a per-project basis. (Even this might be overkill, though. As long as you point it to a compatible version of Node, you should easily be able to use that version everywhere, even if it doesn’t always match your project’s version.)
-
-### What if I use an older version of Node or TypeScript in my project?
-
-You don’t need to upgrade the version of Node you use in your project; you just need one version of Node that can run the latest `typescript-language-server`. So in the short term, the solution might be to install a newer version of Node using a tool like [nvm](https://github.com/nvm-sh/nvm/blob/master/README.md) or [asdf](https://asdf-vm.com/). You can then configure this package to use this newer version of Node _instead of_ inheriting the version of Node used in your shell environment.
-
-`typescript-language-server` is theoretically backwards-compatible, as I understand it, so this should work fine. If it doesn’t, then please [file an issue against the package](https://github.com/savetheclocktower/pulsar-ide-typescript/issues) and let me know. It might be worth it in the future to let the user opt into bringing their own version of `typescript-language-server` so that such projects can keep using a known older version of the language server instead of needing to stay on an older version of this package.
-
----
+If it doesn’t work, you’ll see an error notification explaining that the language server failed to launch. You can open the package settings and supply a full, absolute path to a Node binary of version 18 or greater; you’ll know you’ve entered it properly when the error notification is replaced with a success notification.
 
 ## What does this package do?
 
@@ -40,7 +30,7 @@ The interaction between Pulsar, IDE provider packages, and IDE consumer packages
 
 * _IDE features_ are things that typically don’t work without something that can analyze the language you’re working in: autocompletion, refactoring, identifying important symbols, et cetera.
 * IDE “provider” packages (like this one) can perform that analysis; they act as the “brain” behind a bunch of UI features.
-* A couple of these features can be supplied by Pulsar itself. The rest are implemented in popular community packages like the ones listed below.
+* A couple of these features can be supplied by Pulsar itself through its built-in packages. The rest are implemented in popular community packages like the ones listed below.
 * The user can pick and choose among those packages. If you want a maximal experience, you can install a whole slate of packages. If you want only a few features, you can pick only the packages you want, and uninstall or disable the ones you don’t.
 * Provider packages **should not care** whether a consumer package is installed for a given service, nor should it mandate that any package be installed at all.
 
@@ -116,17 +106,12 @@ Start with these packages; they’re all builtin, actively maintained, and/or bu
   * View a hierarchical list of the file’s symbols
 * [pulsar-refactor](https://web.pulsar-edit.dev/packages/pulsar-refactor)
   * Perform project-wide renaming of variables, methods, classes and types
+* [pulsar-code-format](https://packages.pulsar-edit.dev/packages/pulsar-code-format)
+  * Format code automatically on save
+  * Format the selected range of a buffer
+  * Format the entire buffer
+* [pulsar-hover](https://packages.pulsar-edit.dev/packages/pulsar-hover)
+  * Hover over a symbol to see a tooltip documenting it (or disable this behavior and use a key binding to show the tooltip)
+  * Receive “signature help” when specifying the arguments to a function
 
-For other features that don’t have equivalents above, the legacy `atom-ide` packages should also work:
-
-* [atom-ide-outline](https://web.pulsar-edit.dev/packages/atom-ide-outline)
-  * View a hierarchical list of the file’s symbols
-  * View the call hierarchy for a given file
-* [atom-ide-datatip](https://web.pulsar-edit.dev/packages/atom-ide-datatip)
-  * Hover over a symbol to see any related documentation, including method signatures
-* [atom-ide-signature-help](https://web.pulsar-edit.dev/packages/atom-ide-signature-help)
-  * View a function’s parameter signature as you type its arguments
-* [atom-ide-code-format](https://web.pulsar-edit.dev/packages/atom-ide-code-format)
-  * Invoke on a buffer (or a subset of your buffer) to reformat your code according to the language server’s settings
-* [atom-ide-definitions](https://web.pulsar-edit.dev/packages/atom-ide-definitions)
-  * Jump to the definition of the symbol under the cursor
+Older packages (mainly beginning with `atom-ide-`) can deliver similar features, but the packages above were largely built specifically for Pulsar.
