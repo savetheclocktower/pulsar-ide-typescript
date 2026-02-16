@@ -553,7 +553,7 @@
     },
     "autocomplete.provider": {
       "versions": {
-        "4.0.0": "provideAutocomplete"
+        "5.1.0": "provideAutocomplete"
       }
     },
     "code-actions": {
