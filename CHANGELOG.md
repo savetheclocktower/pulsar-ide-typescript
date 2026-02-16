@@ -1,3 +1,11 @@
+# 0.2.0 — 2026-02-15
+
+* This package now requires Pulsar v1.131.0 or later.
+* Since we now can assume a Node version of >= 20 is bundled with Pulsar, we may once again use the built-in Node to launch `typescript-language-server` instead of forcing the user to bring their own Node version.
+  * However, we’ll keep the bring-your-own-Node feature as an opt-in thing, at least for now.
+* Users may now specify any of the initialization options [documented here](https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md#initializationoptions), including easy customization of `maxTsServerMemory`.
+* This package now uses version `5.1.0` of the `autocomplete.provider` service; this enables new fancy autocompletion tricks. For instance: accepting a suggestion for a symbol that isn’t yet imported into the buffer should automatically add the needed `import` statement.
+
 # 0.1.2 — 2024-06-22
 
 * Updated to latest `@savetheclocktower/atom-languageclient` in order to add these features:
