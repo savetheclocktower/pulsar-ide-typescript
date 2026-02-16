@@ -493,6 +493,18 @@
       "type": "object",
       "title": "Advanced",
       "properties": {
+        "maxTsServerMemory": {
+          "title": "Memory Limit",
+          "type": "number",
+          "default": 0,
+          "description": "The maximum size of V8’s old memory section in megabytes, corresponding to `--max-old-space-size` on the command line and `maxTsServerMemory` in the `typescript-language-server` [configuration](https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md#initializationoptions). For example: a value of `4096` means 4 gigabytes. A value of `0` is equivalent to not specifying this option."
+        },
+        "initializationOptions": {
+          "title": "Initialization Options",
+          "type": "string",
+          "default": "{}",
+          "description": "Other options to pass to `typescript-language-server` upon initialization. You may use any of the options [documented here](https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md#initializationoptions). The value of this field must be valid JSON."
+        },
         "additionalScopes": {
           "title": "Additional Scopes",
           "type": "array",
