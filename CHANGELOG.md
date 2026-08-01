@@ -1,3 +1,8 @@
+# 0.2.1 — 2026-08-01
+
+* Updated to `@savetheclocktower/atom-languageclient` version `1.17.21` in order to accomplish…
+  * Fixed an issue where inserting an import (via code action, acceptance of an autocompletion item, or other means) neglected to insert a comma when appropriate.
+
 # 0.2.0 — 2026-02-15
 
 * This package now requires Pulsar v1.131.0 or later.
