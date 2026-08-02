@@ -1,5 +1,6 @@
 # Unreleased
 
+* Upgraded `typescript-language-server` to major version `5`. This version requires a minimum of Node 20; keep this in mind if you’re bringing your own Node rather than using the built-in Node.
 * This package will now offer to place a `jsconfig.json` in your `ATOM_HOME` directory so that you have type definitions available to you when you edit your `init.js` file. This is a one-time prompt (unless you snooze it) and should not affect any file other than `init.js`.
 
 # 0.2.1 — 2026-08-01

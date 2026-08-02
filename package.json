@@ -27,7 +27,7 @@
   "dependencies": {
     "@savetheclocktower/atom-languageclient": "^1.17.21",
     "typescript": "^5.1.6",
-    "typescript-language-server": "^4.3.4"
+    "typescript-language-server": "^5.3.0"
   },
   "configSchema": {
     "useBuiltinNode": {
