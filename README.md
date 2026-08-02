@@ -2,11 +2,15 @@
 
 An IDE provider package for TypeScript and JavaScript.
 
+Provides autocompletion, go-to-definition, and other useful features; consider installing some IDE consumer packages to enjoy more features.
+
 Uses its own copy of [typescript-language-server](https://www.npmjs.com/package/typescript-language-server); **you do not need to install your own**.
 
 ## Node: use bundled version or bring your own
 
 On Pulsar v1.131.0 and greater, `pulsar-ide-typescript` is able to use Pulsar’s own embedded Node to run `typescript-language-server`. If you would prefer to bring your own Node, you can uncheck “Use Built-in Node” in the package settings and specify the path to your own version of Node.
+
+If you specify a custom Node, please ensure it is of **version 20 or greater**.
 
 ### Use bundled version
 
@@ -22,59 +26,30 @@ This is likely to work even with tools like [asdf](https://asdf-vm.com/) and [vo
 
 Even if you launch Pulsar another way, it’s pretty good at recreating your default shell environment, including your `PATH`. So it’s still worth trying the default value just to see if it works.
 
-If it doesn’t work, you’ll see an error notification explaining that the language server failed to launch. You can open the package settings and supply a full, absolute path to a Node binary of version 18 or greater; you’ll know you’ve entered it properly when the error notification is replaced with a success notification.
+If it doesn’t work, you’ll see an error notification explaining that the language server failed to launch. You can open the package settings and supply a full, absolute path to a Node binary of version 20 or greater; you’ll know you’ve entered it properly when the error notification is replaced with a success notification.
 
 ## What does this package do?
 
-The interaction between Pulsar, IDE provider packages, and IDE consumer packages is hard to explain succinctly, but I’ll give it a try:
+An “IDE provider package” is a package that knows how to talk to a _language server_. A language server is a program that can analyze a project written in a specific programming language and act as a “brain” for a bunch of features that would be useful for a code editor.
 
-* _IDE features_ are things that typically don’t work without something that can analyze the language you’re working in: autocompletion, refactoring, identifying important symbols, et cetera.
-* IDE “provider” packages (like this one) can perform that analysis; they act as the “brain” behind a bunch of UI features.
-* A couple of these features can be supplied by Pulsar itself through its built-in packages. The rest are implemented in popular community packages like the ones listed below.
-* The user can pick and choose among those packages. If you want a maximal experience, you can install a whole slate of packages. If you want only a few features, you can pick only the packages you want, and uninstall or disable the ones you don’t.
-* Provider packages **should not care** whether a consumer package is installed for a given service, nor should it mandate that any package be installed at all.
+The Pulsar documentation has [more information about language servers](https://docs.pulsar-edit.dev/ide-features/getting-started/#what-are-language-servers%253F) if you’re curious.
 
-IDE features are great when they make you feel productive, but bad when they get in your way. Because the line between “useful” and “invasive” will vary per person, we want to provide an IDE experience that is, above all, customizable.
+This package knows how to talk to `typescript-language-server`, a package that wraps the `tsserver` program that comes with TypeScript. `tsserver` has its own protocol (it predates the invention of the language server protocol), so `typescript-language-server` exists as a translator to LSP concepts.
+
+(TypeScript 7 offers its own native language server, and this package will eventually offer it as an option to use instead of `typescript-language-server`, but probably not until at least the 7.1 release.)
 
 ## What can it do that similar packages can’t?
 
 The formerly first-party [`ide-typescript` package](https://web.pulsar-edit.dev/packages/ide-typescript) is great, but can’t do quite as much as this package can.
 
-### Symbol navigation
+Here are some advantages of `pulsar-ide-typescript` over `ide-typescript`:
 
-This package integrates with recent versions of Pulsar’s built-in `symbols-view` package.
-
-You can view a comprehensive list of file symbols with <kbd>Ctrl-R</kbd>/<kbd>Cmd-R</kbd>:
-
-<p><img width="632" alt="file-symbols" src="https://github.com/savetheclocktower/pulsar-ide-typescript/assets/3450/6b07688b-b1f7-48bd-86ae-d3105eb213f9"></p>
-
-Or search the entire project for symbols via <kbd>Ctrl-Shift-R</kbd>/<kbd>Cmd-Shift-R</kbd>:
-
-<p><img width="660" alt="project-wide-symbols" src="https://github.com/savetheclocktower/pulsar-ide-typescript/assets/3450/90b76096-1562-4f78-8f1a-59b00b1375c2"></p>
-
-Or use <kbd>Ctrl-Alt-Shift-Down</kbd>/<kbd>Cmd-Opt-Down</kbd> to jump to the definition of the symbol under the cursor — even if it’s in another file — then use <kbd>Ctrl-Alt-Shift-Up</kbd>/<kbd>Cmd-Opt-Up</kbd> to return to your original cursor position:
-
-![jump-to-definition](https://github.com/savetheclocktower/pulsar-ide-typescript/assets/3450/c2158087-084a-4bda-999e-99b39fb403af)
-
-### Code actions
-
-This package integrates with the popular `intentions` package to give you a simple menu you can invoke to run code actions or suggested diagnostic fixes.
-
-### Ability to ignore certain diagnostic messages
-
-This package allows you to ignore certain kinds of diagnostic messages. You can choose whether to ignore them altogether or just until the file is saved:
-
-<p><img width="667" alt="intentions" src="https://github.com/savetheclocktower/pulsar-ide-typescript/assets/3450/a89ec391-dac7-463c-8036-9742f5a28c3c"></p>
-
-The latter is useful for annoying messages that point out “problems” in your code that you simply haven’t had a chance to fix yet because you’re _literally still typing_.
-
-Diagnostic messages require the community `linter` package. The menu shown in the screenshot above is implemented by the community `intentions` package.
-
-### Support for refactoring
-
-You can place the cursor inside of any token and invoke a command to rename it. This package will be able to tell Pulsar which other usages of that symbol need to be renamed as well.
-
-This feature requires the community `pulsar-refactor` package.
+* Actively maintained and keeps up with `typescript-language-server` releases.
+* Integrates with the built-in `symbols-view` package to provide jump-to-definition functionality.
+* Adds ability to invoke code actions via the popular [`intentions`](https://packages.pulsar-edit.dev/packages/intentions) community package.
+* Adds ability to ignore certain diagnostic messages — either altogether or while the document is in a modified state — via a code action.
+* Adds support for refactoring (project-wide renaming of functions or other symbols) via a package like [`pulsar-refactor`](https://packages.pulsar-edit.dev/packages/pulsar-refactor).
+* Automatically filters out diagnostic messages that are not relevant inside JavaScript projects.
 
 ### Optional JavaScript support
 
@@ -82,9 +57,21 @@ Like `ide-typescript`, this package can be configured to start a language server
 
 A smaller feature set is available inside of JavaScript projects; autocompletion and symbol providers are sparser with their suggestions, and features like refactoring may not be available at all. Still, you’ll probably be impressed with what it can do.
 
-## What _exactly_ does it do?
+### Ability to add type definitions for `init.js`
 
-Install this package, then install any of the following packages to get special features.
+`pulsar-ide-typescript` can give you API autocompletion and documentation for the Pulsar API. This API is available to you within [your `init.js` file](https://docs.pulsar-edit.dev/customizing-pulsar/the-init-file/) to help you customize Pulsar; it consists of a number of methods defined on the `atom` global object, along with classes you can import via `require('atom')`.
+
+Upon first run, this package will offer to define a `jsconfig.json` file in your `ATOM_HOME` to make this possible. This file tells the language server to make the Pulsar API type definitions ambiently available within `init.js`. It affects only that specific file and will not interfere with anything else.
+
+This is a one-time prompt unless you snooze it. If you choose “yes” or “no” to this prompt, this package will not ask again. If you choose “later” or close the prompt, you will be asked again upon the next launch of Pulsar or the next opening of a project window.
+
+If you said “no” to this and want to change your mind, open the **Advanced** section of this package’s settings and check the option “Prompt about jsconfig.json in your ATOM_HOME directory.” The prompt will be shown again upon the next launch of Pulsar or the next opening of a project window.
+
+(Even without a `jsconfig.json` in your `ATOM_HOME` directory, you may still find that this package is able to provide type definitions for Pulsar. That’s because `typescript-language-server` has a global types cache. If you have _any_ project in which you’ve imported `@pulsar-edit/types` or `@types/atom`, there’s a good chance that `typescript-language-server` will be able to use the types it cached from that project.)
+
+## What other packages should I install?
+
+This package provides only the “brain” for a bunch of TypeScript- and JavaScript-related features. The actual implementations of those features come from packages — some of which are built into Pulsar and some of which need installation.
 
 Start with these packages; they’re all builtin, actively maintained, and/or built exclusively for Pulsar:
 
