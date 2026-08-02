@@ -513,6 +513,12 @@
           },
           "default": [],
           "description": "A comma-separated list of additional language scopes for which the language server's features should be used. (The language server will not start automatically when you open one of these files; you may have to start the language server manually via the **Pulsar Ide Typescript Alpha: Start Language Server** command.)"
+        },
+        "promptForJsconfigJson": {
+          "title": "Prompt about `jsconfig.json` in your `ATOM_HOME` directory",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether this extension should show a notification offering to place a `jsconfig.json` file in your `ATOM_HOME` directory in order to make Pulsar's type definition files available when editing your `init.js` file. This option is automatically set to `false` whenever the user interacts with the notification, so this prompt will happen only once."
         }
       }
     }
@@ -619,6 +625,7 @@
     }
   },
   "devDependencies": {
+    "@types/atom": "npm:@pulsar-edit/types@^1.132.0",
     "eslint": "^8.45.0"
   }
 }

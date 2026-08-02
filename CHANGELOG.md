@@ -1,3 +1,7 @@
+# Unreleased
+
+* This package will now offer to place a `jsconfig.json` in your `ATOM_HOME` directory so that you have type definitions available to you when you edit your `init.js` file. This is a one-time prompt (unless you snooze it) and should not affect any file other than `init.js`.
+
 # 0.2.1 — 2026-08-01
 
 * Updated to `@savetheclocktower/atom-languageclient` version `1.17.21` in order to accomplish…
